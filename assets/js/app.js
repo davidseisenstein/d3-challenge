@@ -92,6 +92,7 @@ d3.csv("/assets/data/data.csv").then(function(stateData, err) {
       .attr("stroke-width", "1");
 
     // Create text for the circles in the scatter plot
+    // Only getting half the states?
 
     var textGroup = chartGroup.selectAll("text")
       .data(stateData)
@@ -103,5 +104,27 @@ d3.csv("/assets/data/data.csv").then(function(stateData, err) {
       .attr("stroke", "white")
       .attr("fill", "white")
       .attr("stroke-width", ".5")
-      .attr("text-anchor", "middle")
+      .attr("text-anchor", "middle");
+
+    // Initialize the tooltip
+
+    var toolTip = d3.tip()
+      .attr("class", "tooltip")
+      .offset([80, -60])
+      .html(function(d) {
+        return (`<strong>${d.state}<strong><hr>Healthcare: ${d.healthcare}%
+        <br>Poverty: ${d.poverty}%`)
+      });
+
+    // Create tooltip in the chart
+
+    chartGroup.call(toolTip)
+
+    // Create event listeners to display and hide the tooltip
+    circlesGroup.on("mouseover", function(d) {
+      toolTip.show(d, this);
+    })
+      .on("mouseout", function(d) {
+        toolTip.hide(d);
+      })
 })
