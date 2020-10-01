@@ -27,8 +27,30 @@ var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Import the data using d3.csv
-d3.csv("/assets/data/data.csv").then(function(data, err) {
+d3.csv("/assets/data/data.csv").then(function(stateData, err) {
+    // add quick error handling and print the data to the console
     if (err) throw err;
 
-    console.log(data)
+    //  parse and convert data to numeric
+
+    stateData.forEach(data => {
+      data.id = +data.id;
+      data.poverty = +data.poverty;
+      data.povertyMoe = +data.povertyMoe;
+      data.age = +data.age;
+      data.ageMoe = +data.ageMoe;
+      data.income = +data.income;
+      data.incomeMoe = +data.incomeMoe;
+      data.healthcare = +data.healthcare;
+      data.healthcareLow = +data.healthcareLow;
+      data.healthcareHigh = +data.healthcareHigh;
+      data.obesity = +data.obesity;
+      data.obesityLow = +data.obesityLow;
+      data.obesityHigh = +data.obesityHigh;
+      data.smokes = +data.smokes;
+      data.smokesLow = +data.smokesLow;
+      data.smokesHigh = +data.smokesHigh;
+    });
+
+    console.log(stateData)
 })
