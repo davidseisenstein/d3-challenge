@@ -77,4 +77,18 @@ d3.csv("/assets/data/data.csv").then(function(stateData, err) {
     chartGroup.append("g")
       .call(leftAxis);
 
+    // Create Circles for the scatter plot
+
+    var circlesGroup = chartGroup.selectAll("circle")
+      .data(stateData)
+      .enter()
+      .append("circle")
+      .attr("cx", d => xScale(d.healthcare))
+      .attr("cy", d => yScale(d.poverty))
+      .attr("r", "10")
+      .attr("fill", "cyan")
+      .attr("fill-opacity", "0.5")
+      .attr("stroke", "black")
+      .attr("stroke-width", "1");
+
 })
