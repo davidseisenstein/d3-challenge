@@ -52,5 +52,29 @@ d3.csv("/assets/data/data.csv").then(function(stateData, err) {
       data.smokesHigh = +data.smokesHigh;
     });
 
-    console.log(stateData)
+    console.log(stateData);
+
+    // Create scale functions for healthcare and poverty
+    var xScale = d3.scaleLinear()
+      .domain(d3.extent(stateData, d => d.healthcare))
+      .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+      .domain(d3.extent(stateData, d => d.poverty))
+      .range([height,0]);
+
+    // Create axis functions
+
+    var bottomAxis = d3.axisBottom(xScale);
+    var leftAxis = d3.axisLeft(yScale);
+
+    // Append axes to the chart
+
+    chartGroup.append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(bottomAxis);
+
+    chartGroup.append("g")
+      .call(leftAxis);
+
 })
