@@ -85,10 +85,23 @@ d3.csv("/assets/data/data.csv").then(function(stateData, err) {
       .append("circle")
       .attr("cx", d => xScale(d.healthcare))
       .attr("cy", d => yScale(d.poverty))
-      .attr("r", "10")
+      .attr("r", "15")
       .attr("fill", "cyan")
-      .attr("fill-opacity", "0.5")
+      .attr("fill-opacity", "0.75")
       .attr("stroke", "black")
       .attr("stroke-width", "1");
 
+    // Create text for the circles in the scatter plot
+
+    var textGroup = chartGroup.selectAll("text")
+      .data(stateData)
+      .enter()
+      .append("text")
+      .html(d => d.abbr)
+      .attr("x", d => xScale(d.healthcare))
+      .attr("y", d => yScale(d.poverty))
+      .attr("stroke", "white")
+      .attr("fill", "white")
+      .attr("stroke-width", ".5")
+      .attr("text-anchor", "middle")
 })
